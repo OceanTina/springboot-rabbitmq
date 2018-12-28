@@ -2,18 +2,17 @@ package com.geo.rabbitmq.springbootrabbitmq;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
-public class HelloSender {
+public class Controller {
     @Autowired
-    private AmqpTemplate template;
-
+    private AmqpTemplate amqpTemplate;
     @RequestMapping("/send")
-    public void send() {
-        template.convertAndSend("topic.messages", "hello,rabbit");
+    public void SennerMsg(String msg){
+        amqpTemplate.convertAndSend("exchange","a",msg);
+
     }
 }
+

@@ -43,7 +43,7 @@
             <optional>true</optional>
         </dependency>
         <!--添加rabbitmq依赖 -->
-        <dependency>
+        <dependency>websocket
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>

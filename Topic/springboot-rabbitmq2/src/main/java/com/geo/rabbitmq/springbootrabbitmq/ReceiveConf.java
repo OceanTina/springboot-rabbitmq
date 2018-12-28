@@ -3,11 +3,7 @@ package com.geo.rabbitmq.springbootrabbitmq;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,30 +11,10 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @Configuration
-public class SenderConf {
-//    @Bean(name="message")
-//    public Queue queueMessage() {
-//        return new Queue("topic.message");
-//    }
-//
-//    @Bean(name="messages")
-//    public Queue queueMessages() {
-//        return new Queue("topic.messages");
-//    }
-
+public class ReceiveConf {
 //    @Bean
-//    public TopicExchange exchange() {
-//        return new TopicExchange("fanoutEx");
-//    }
-
-//    @Bean
-//    Binding bindingExchangeMessage(@Qualifier("message") Queue queueMessage, TopicExchange exchange) {
-//        return BindingBuilder.bind(queueMessage).to(exchange).with("topic.message");
-//    }
-//
-//    @Bean
-//    Binding bindingExchangeMessages(@Qualifier("messages") Queue queueMessages, TopicExchange exchange) {
-//        return BindingBuilder.bind(queueMessages).to(exchange).with("topic.#");//*表示一个词,#表示零个或多个词
+//    public Queue queue() {
+//        return new Queue("queue");
 //    }
 
     @Bean(name="channel")
