@@ -1,5 +1,6 @@
 package com.geo.rabbitmq.springbootrabbitmq;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -61,5 +62,13 @@ public class SenderConf {
         }
 
         return chan;
+    }
+
+    @Bean("properties")
+    public AMQP.BasicProperties getAmq() {
+        AMQP.BasicProperties.Builder builder = new AMQP.BasicProperties.Builder();
+        builder.deliveryMode(2);
+        AMQP.BasicProperties properties = builder.build();
+        return properties;
     }
 }

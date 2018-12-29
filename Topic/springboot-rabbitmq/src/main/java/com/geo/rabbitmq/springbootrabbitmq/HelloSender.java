@@ -1,5 +1,6 @@
 package com.geo.rabbitmq.springbootrabbitmq;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -21,6 +22,8 @@ public class HelloSender {
 
     @Autowired
     private Channel channel;
+    @Autowired
+    private AMQP.BasicProperties properties;
 
     @RequestMapping("/send")
     public void send(String message) {
@@ -43,7 +46,7 @@ public class HelloSender {
             //声明交换机
             //参数意义,1 交换机名称,2 类型:fanout,direct,topic
             //exchangeDeclare(String exchange, String type, boolean durable)
-            channel.exchangeDeclare("userExchange", "direct");
+//            channel.exchangeDeclare("userExchange", "direct");
 
             /**
              * 将交换器与队列通过路由键绑定
@@ -53,7 +56,8 @@ public class HelloSender {
 //            channel.queueBind("user201812", "userExchange", "wuhan");
             //发送消息
             // channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, MessageProperties.PERSISTENT_TEXT_PLAIN , message.getBytes());
-            channel.basicPublish("userExchange", "wuhan", null, mess.getBytes());
+
+            channel.basicPublish("userExchange", "wuhan", properties, mess.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {

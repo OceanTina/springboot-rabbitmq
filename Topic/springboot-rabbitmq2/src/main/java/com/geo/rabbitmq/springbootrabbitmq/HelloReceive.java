@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException;
 @RequestMapping("/receive")
 public class HelloReceive {
 
-
+//  SimpleMessageListenerContainer类
 //    @RabbitListener(queues="topic.message")    //监听器监听指定的Queue
 //    public void process1(String str) {
 //        System.out.println("message:"+str);
@@ -50,7 +50,9 @@ public class HelloReceive {
            //exclusive ： 是否排他的，true，排他。如果一个队列声明为排他队列，该队列公对首次声明它的连接可见，并在连接断开时自动删除，
            channel.queueDeclare(userQueue, true, false, false, null);
 //           //声明交换机
-           channel.exchangeDeclare("userExchange", "direct");
+           //exchangeDeclare(String exchange, String type, boolean durable)
+//           channel.exchangeDeclare("userExchange", "direct");
+           channel.exchangeDeclare("userExchange", "direct", true);
            //绑定队列到交换机
            //参数 1 队列名称,2 交换机名称 3 路由key
            //channel.queueBind(QUEUR_NAME, EXCHANGE_NAME, ROUTING_KEY);
