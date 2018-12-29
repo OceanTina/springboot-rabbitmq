@@ -30,7 +30,7 @@ public class HelloReceive {
     private Channel channel;
 
     @RequestMapping("/getMessage")
-   public void getMessage(String userQueue) {
+   public void getMessage(String userQueue,String routingKey) {
        try {
 //           //获取连接
 //           ConnectionFactory factory = new ConnectionFactory();
@@ -44,14 +44,18 @@ public class HelloReceive {
 //           chan = conn.createChannel();
 
 
-           //声明队列
-           channel.queueDeclare(userQueue, false, false, false, null);
-           //声明交换机
-           channel.exchangeDeclare("userExchange", "fanout");
+//           //声明队列
+           //queueDeclare(String queue, boolean durable, boolean exclusive, boolean autoDelete,Map<String, Object> arguments)
+           //durable： 是不持久化， true ，表示持久化，会存盘，服务器重启仍然存在，false，非持久化
+           //exclusive ： 是否排他的，true，排他。如果一个队列声明为排他队列，该队列公对首次声明它的连接可见，并在连接断开时自动删除，
+           channel.queueDeclare(userQueue, true, false, false, null);
+//           //声明交换机
+           channel.exchangeDeclare("userExchange", "direct");
            //绑定队列到交换机
            //参数 1 队列名称,2 交换机名称 3 路由key
-           channel.queueBind(userQueue, "userExchange", "");
-           channel.basicQos(1);
+           //channel.queueBind(QUEUR_NAME, EXCHANGE_NAME, ROUTING_KEY);
+           channel.queueBind(userQueue, "userExchange", routingKey);
+           channel.basicQos(10);
 
            //定义消费者
            Consumer consumer = new DefaultConsumer(channel) {
@@ -61,7 +65,7 @@ public class HelloReceive {
                    String message = new String(body, "UTF-8");
                    System.out.println("Customer Received '" + message + "'" + userQueue);
 
-                   //查询Redis中消费者对应的用户是否在线，如果在线则消费并手动应答，如果不在线则不应答。
+                   //手动应答。
 //                   channel.basicAck(envelope.getDeliveryTag(),false);
                }
            };
@@ -71,6 +75,13 @@ public class HelloReceive {
            //消费者与队列绑定
            //确认收到消息    进行消费false 手动应答；true：自动应答
            channel.basicConsume(userQueue, false, consumer);
+
+           //关闭消费者的连接
+//           try {
+//               channel.close();
+//           } catch (TimeoutException e) {
+//               e.printStackTrace();
+//           }
 
        }catch (IOException e) {
            e.printStackTrace();

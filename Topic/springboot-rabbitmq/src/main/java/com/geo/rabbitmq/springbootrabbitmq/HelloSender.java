@@ -42,10 +42,18 @@ public class HelloSender {
 
             //声明交换机
             //参数意义,1 交换机名称,2 类型:fanout,direct,topic
-            channel.exchangeDeclare("userExchange", "fanout");
-            //发送消息
+            //exchangeDeclare(String exchange, String type, boolean durable)
+            channel.exchangeDeclare("userExchange", "direct");
 
-            channel.basicPublish("userExchange", "", null, mess.getBytes());
+            /**
+             * 将交换器与队列通过路由键绑定
+             * 消息直接发送到交换机
+             */
+            //channel.queueBind(QUEUR_NAME, EXCHANGE_NAME, ROUTING_KEY);
+//            channel.queueBind("user201812", "userExchange", "wuhan");
+            //发送消息
+            // channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, MessageProperties.PERSISTENT_TEXT_PLAIN , message.getBytes());
+            channel.basicPublish("userExchange", "wuhan", null, mess.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
