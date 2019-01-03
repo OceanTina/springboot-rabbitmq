@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @RestController
-@RequestMapping("/receive")
 public class HelloReceive {
 
 //  SimpleMessageListenerContainer类
@@ -29,7 +28,6 @@ public class HelloReceive {
     @Autowired
     private Channel channel;
 
-    @RequestMapping("/getMessage")
    public void getMessage(String userQueue,String routingKey) {
        try {
 //           //获取连接
