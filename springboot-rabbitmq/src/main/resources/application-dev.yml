@@ -1,0 +1,22 @@
+server:
+  port: 8888
+
+spring :
+  application :
+    name : spirng-boot-rabbitmq-recive
+
+#  rabbitmq :
+#    host : 127.0.0.1
+#    port : 5672
+#    username : guest
+#    password : guest
+
+rabbitmq:
+  manage:
+    host: 192.168.88.200
+    port: 15672
+
+#rabbitmq:
+#  manage:
+#    host: 127.0.0.1
+#    port: 15672
